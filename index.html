@@ -1,0 +1,593 @@
+<!DOCTYPE html><html><head>
+	
+	<!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta property="og:image" content="images/alien.png">
+	<title>Moon Clicker</title>
+	<meta name="description" content="Moon Clicker. ">
+	<link rel="canonical" href="https://gamemakery.com/1/idle-clicker-games">
+	
+  <link href="css/animate.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/jquery.mobile.min.css">
+	<link href="//fonts.googleapis.com/css?family=Economica:400,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+	<script async="" type="text/javascript" src="js/gpt.js"></script><script src="js/jquery.min.js"></script>
+	<script src="js/jquery.mobile.min.js"></script>
+
+	<style>
+			body {
+				background: #000000;
+				color:#cccccc;
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+			}
+			canvas {
+								image-rendering: optimizeSpeed;
+								-webkit-interpolation-mode: nearest-neighbor;
+								-ms-touch-action: none;
+								margin: 0px;
+								padding: 0px;
+								border: 0px;
+			}
+			:-webkit-full-screen #canvas {
+
+					width: 100%;
+					height: 100%;
+			}
+			div.gm4html5_div_class
+			{
+				display: none;
+				margin: 0px;
+				padding: 0px;
+				border: 0px;
+
+				/*bottom: 0px;
+    			top: 0px;
+   			    right: 0px;
+   			    left:0px;*/
+
+			}
+			:-webkit-full-screen {
+				width: 100%;
+				height: 100%;
+			}
+
+			.ui-panel-inner {
+			    position: absolute;
+			    top: 1px;
+			    left: 0;
+			    right: 0;
+			    bottom: 0px;
+			    overflow: scroll;
+			    -webkit-overflow-scrolling: touch;
+			}
+			#css_version::-webkit-scrollbar {
+    width: 11px;
+}
+
+#css_version::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+}
+
+#css_version::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 11px;
+    border-radius: 11px;
+    background: rgba(28,114,150,0.8);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+#css_version::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4);
+}
+
+.ui-content  {
+    bottom: 0px;
+    top: 0px;
+    right: 0px;
+
+
+    /*position: absolute;
+    overflow-x: visible;*/
+}
+
+.ui-content h1 {
+	text-align: center;
+  color: #fff;
+	font-family: 'Economica', sans-serif;
+  font-size: 4em;
+	font-weight: 200;
+  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8);
+	display: inline-block;
+	margin: 0 auto;
+	line-height: 1;
+	width: 100%;
+
+}
+
+.ui-content h2 {
+	position: absolute;
+	bottom: 0;
+	left: 10;
+  color: #fff;
+	font-family: 'Economica', sans-serif;
+  font-size: 1.5em;
+	font-weight: 200;
+  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8);
+}
+.glow.in {
+  text-shadow:
+    0.025em 0.025em 0.025em rgba(0, 0, 0, 0.8),
+    0 0 0.5em rgba(255, 255, 255, 0.3);
+}
+.topleft {
+  position:absolute;
+  top:0;
+  left:0;
+	padding: 5px 5px 5px 5px;
+}
+.bottomleft {
+  position: fixed;
+  bottom:0;
+  left:0;
+  padding: 5px 5px 5px 5px;
+}
+.topright {
+  position:absolute;
+  top:0;
+  right:0;
+	padding: 5px 5px 5px 5px;
+}
+.bottomright {
+  position: fixed;
+  bottom:0;
+  right:0;
+  padding: 5px 5px 5px 5px;
+}
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper { background:#000000 !important; }
+
+.ui-page {
+    height: 100% !important;
+    min-height: 100% !important;
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+	margin-right: 45px;
+  border: 1px solid #000000;
+  border-radius: 5px;
+  position: absolute;
+  top: 10px;
+  left: 45px;
+  /* Each alert has its own width */
+  float: right;
+  clear: right;
+	font-family: 'Economica', sans-serif;
+	font-size: 1.5em;
+}
+
+.alert-red {
+  color: white;
+  background-color: #993300;
+}
+.alert-green {
+  color: white;
+  background-color: #999966;
+}
+.alert-blue {
+  color: white;
+  background-color: #003333;
+}
+.alert-yellow {
+  color: #333333;
+  background-color: #FFCC66;
+}
+.alert-orange {
+  color:white;
+  background-color: #CC6633;
+}
+.countdown{position:absolute;padding-left: 35%;font-size:100px;}
+            /* START - Login Dialog Box */
+            div.gm4html5_login
+            {
+                 padding: 20px;
+                 position: absolute;
+                 border: solid 2px #000000;
+                 background-color: #404040;
+                 color:#00ff00;
+                 border-radius: 15px;
+                 box-shadow: #101010 20px 20px 40px;
+            }
+            div.gm4html5_cancel_button
+            {
+                 float: right;
+            }
+            div.gm4html5_login_button
+            {
+                 float: left;
+            }
+            div.gm4html5_login_header
+            {
+                 text-align: center;
+            }
+            /* END - Login Dialog Box */
+            :-webkit-full-screen {
+               width: 100%;
+               height: 100%;
+            }
+	</style>
+	<script src="js/jquery.lettering.js"></script>
+	<script src="js/jquery.textillate.js"></script>
+
+
+    <!-- Google tag (gtag.js) -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-NQKQVMTXHC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-NQKQVMTXHC');
+    </script>
+      
+
+<script type="text/javascript">
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+  (function() {
+    var gads = document.createElement('script');
+    gads.async = true;
+    gads.type = 'text/javascript';
+    var useSSL = 'https:' == document.location.protocol;
+    gads.src = (useSSL ? 'https:' : 'http:') +
+      '//www.googletagservices.com/tag/js/gpt.js';
+    var node = document.getElementsByTagName('script')[0];
+    node.parentNode.insertBefore(gads, node);
+  })();
+</script>
+
+<script type="text/javascript">
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/1005400/GameMakery_Com_160_600', [160, 600], 'div-gpt-ad-1445273404786-0').addService(googletag.pubads());
+    googletag.defineSlot('/1005400/GameMakery_Com_234_60', [234, 60], 'div-gpt-ad-1445273404786-1').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+
+
+<script async="" src="js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-3835253009056065",
+    enable_page_level_ads: true
+  });
+</script>
+      
+</head>
+<body>
+
+<div data-role="page" id="gamepage" class="jqm-panel-page" data-quicklinks="true" data-theme="a">
+
+	<div role="main" id="mainp" class="ui-content jqm-content">
+
+<!--<div class="object">
+	<div id="ad" style="width:100%;height:100%;position:fixed !important;position:absolute;top:0;right:0;bottom:0;left:0;">
+						<div class="countdown"></div>
+						<div id="banner_center">
+							<div id="mainContainer">
+								<div id="content" style="overflow:visible;">
+									<video id="contentElement" />
+								</div>
+								<div id="adContainer" style="position:absolute;">              
+									<div id="adContainer ad container">
+										 
+										 <video id="advertisement"/>
+									</div>
+									<div id="overlay ad container">
+									</div>              
+								</div>
+							</div>
+						</div>
+					</div>
+	<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js?v=1"></script>
+	<script src="//cdn.gamemakery.com/js/ads.js?v=1"></script>
+					-->
+
+
+		<div class="gm4html5_div_class" id="gm4html5_div_id">
+				<!-- Create the canvas element the game draws to -->
+				<canvas id="canvas" width="720" height="420">
+					<p>Your browser doesn't support HTML5 canvas.</p>
+				</canvas>
+				<script>  
+				
+								var LinearAd=false;
+								var checkload=0;
+				if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+				var tag_burl ="//googleads.g.doubleclick.net/pagead/ads?ad_type=text_image_flash&client=ca-games-pub-3835253009056065&description_url=https%3A%2F%2Fgamemakery.com%2F1%2F9QYofaGV&videoad_start_delay=0&hl=en&adtest=on&channel=9929423097&overlay=1";
+				} else { 	
+				var tag_burl ="//googleads.g.doubleclick.net/pagead/ads?ad_type=video_text_image_flash&client=ca-games-pub-3835253009056065&description_url=https%3A%2F%2Fgamemakery.com%2F1%2F9QYofaGV&videoad_start_delay=0&hl=en&adtest=on&channel=8452689891&overlay=0";
+				}
+				var unic="9QYofaGV";
+				var title1="TW9vbiBDbGlja2Vy";
+				var usrname="";
+				var noti=0;
+				var bgid="MQ==";
+				var TimerVari;
+
+								var mainsp1="aHR0cHM6Ly9jZG4uZ2FtZW1ha2VyeS5jb20vL3N0YXRpYy9zcC03NS03NS9zcC04LnBuZz8xNjk4OTM5NTk0";
+				var bkg1="aHR0cHM6Ly9jZG4uZ2FtZW1ha2VyeS5jb20vL3N0YXRpYy9iZy9iZy04LTcyMC5wbmc/MTY5ODkzOTU5NA==";
+				var str1="TW9vbnM=";
+				var str2="Q3Vyc29ycw==";
+				var str3="RW1wbG95ZWU=";
+				var str4="V29ya3Nob3A=";
+				var str5="RmFybQ==";
+				var str6="UXVhcnJ5";
+				var str7="TWluZQ==";
+				var str8="U3RvcmFnZQ==";
+				var str9="QmFzaWMgRmFjdG9yeQ==";
+				var str10="QWR2LiBGYWN0b3J5";
+				var str11="RWxpdGUgRmFjdG9yeQ==";
+				var str12="SW50bCBDb3Jw";
+				var str13="R2FsYWN0aWMgQ29ycA==";
+														
+						
+					
+					
+																																				                				
+				function ohSnap(n,t,a,temps){var e,i="",o=temps,f=$("#ohsnap");a&&(i="<span class='"+a+"'></span> "),e=$('<div class="alert alert-'+t+'">'+i+n+"</div>").fadeIn("fast"),f.append(e),e.on("click",function(){ohSnapX($(this))}),setTimeout(function(){ohSnapX(f.children(".alert").first())},o)}function ohSnapX(n){"undefined"!=typeof n?n.fadeOut("fast",function(){$(this).remove()}):$(".alert").fadeOut("fast",function(){$(this).remove()})}
+
+						function sGame() {
+									//$('#ad').hide();
+									clearTimeout(TimerVari);
+									$.mobile.loading('hide');
+									$(".gm4html5_div_class").css({ "display": "inline" });
+									if (noti==0) { ohSnap("", 'blue','',10000); noti=1;  }
+									
+						}
+
+
+				$(document).bind('pagecreate', function() {
+
+				if( /Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+					//|iPhone|iPad|iPod
+				//mobile
+				} else { 	
+				//desktop
+				$("#nofullscreen" ).remove();$("#fullscreen" ).remove();
+				}
+					
+
+					function launchFullScreen(element) {
+					if (element.requestFullscreen)
+					{ element.requestFullscreen(); }
+					else if (element.mozRequestFullScreen)
+					{ element.mozRequestFullScreen(); }
+					else if (element.webkitRequestFullscreen)
+					{ element.webkitRequestFullscreen(); }
+					else if (element.msRequestFullscreen)
+					{ element.msRequestFullscreen(); }
+					}
+					function cancelFullScreen() {
+					if (document.exitFullscreen) {
+					document.exitFullscreen();
+					} else if (document.mozCancelFullScreen) {
+					document.mozCancelFullScreen();
+					} else if (document.webkitExitFullscreen) {
+					document.webkitExitFullscreen();
+					} else if (document.msExitFullscreen) {
+					document.msExitFullscreen();
+					}
+					}
+
+						function ShowScore() {
+							var output = $('#score-table');   
+							
+							$.ajax({
+								method: "POST",
+							    url: '//gamemakery.com/showscore.php',
+							    data: { bgid: "1", gid: "9QYofaGV", gorder: "1" },
+							    dataType: 'json',
+							   //jsonp: 'jsoncallback',
+							    timeout: 5000,
+							        success: function(data, status){
+
+										//console.log(data);
+
+										$.each(data, function(i) {
+										    $('#score-table > tbody').append(
+										        '<tr><th>'+(i+1)+'</th><td>'
+										        + this.name.substring(0, 10)
+										        + '</td><td>'
+										        + this.score +
+										        '</td></tr>'
+										    );
+										});
+								         
+								    },
+							    error: function(){
+							        output.text('There was an error loading the data.');
+							    }
+							});
+							
+						}
+
+
+
+
+
+					$('.glow').textillate({ in: { effect: 'fadeInLeftBig' }, out: { effect: 'fadeOutRightBig', sync: false }, loop: true });
+					$('.typewrite').textillate({  initialDelay: 1000, in: { effect: 'flipInY' }});
+
+					// Retrieve
+					if(localStorage.getItem(unic+"-name") === null){
+		        		TimerVari = setTimeout(function () { $.mobile.loading('hide'); $( "#popupLogin" ).popup( "open" ); }, 10000);
+					} else {
+
+						window.usrname=localStorage.getItem(unic+"-name");
+						$(".vuto" ).remove();
+						setTimeout(function () { $('.glow').textillate('stop'); }, 3000);
+						setTimeout(function () { $(".glow" ).remove(); $(".typewrite" ).remove(); $(".vuto" ).remove(); }, 4900);
+						//setTimeout(function () { requestAds(); }, 5000); // activar preload
+						setTimeout(function () {sGame(); }, 5000);
+						
+						
+					}
+
+					$("#fullscreen").click(function(e) {
+						launchFullScreen(document.documentElement);						
+						$("#fullscreen").css({ "display": "none" });
+						$("#nofullscreen").css({ "display": "inline" });
+					});
+					$("#nofullscreen").click(function(e) {
+						cancelFullScreen(document.documentElement);
+						$("#nofullscreen").css({ "display": "none" });
+						$("#fullscreen").css({ "display": "inline" });
+					});
+					$("#popupLogin1").click(function(e) {
+						$.mobile.loading('hide');
+						$( "#popupLogin" ).popup( "open" );
+					});
+
+					$(document).bind('panelopen', function (e, data) {
+						$('#score-table > tbody').empty();
+						ShowScore();
+					});
+					$("#showscore").click(function(e) {
+						$('#score-table > tbody').empty();
+						ShowScore();
+					});
+
+				
+
+	
+
+					//$('#menu').addClass('hover');
+
+						$("button[type=submit]").click(function(e) {
+								//	alert('enviat');
+								var name = $("#un").val();
+								if (name == '') {
+								e.preventDefault();
+								//alert("Please Fill Required Fields");
+							 $("#un").css({"border": "1px solid red","background": "#FFCECE"});
+					 } else {
+							
+							// Store
+							localStorage.setItem(unic+"-name", name);
+								//alert(name);
+							window.usrname=name;
+							$("#popupLogin").popup( "close" );
+							$('.glow').textillate('stop'); $(".glow" ).remove(); $(".typewrite" ).remove(); $(".vuto" ).remove();
+							//requestAds(); // activar preload
+							sGame();
+							}
+					});
+
+
+
+			});
+
+
+
+
+				</script>
+	
+			<script src="js/1.js"></script>
+
+
+
+				<div id="ohsnap"></div>
+				
+				<a href="#menu" class="ui-btn ui-icon-star ui-btn-icon-notext ui-overlay-shadow ui-shadow topleft" id="menu" alt="menu">Menu</a>
+				<a class="ui-btn ui-icon-arrow-d-l ui-btn-icon-notext ui-overlay-shadow ui-shadow topright" id="nofullscreen" alt="No Fullscreen">No Fullscreen</a>
+				<a class="ui-btn ui-icon-arrow-u-r ui-btn-icon-notext ui-overlay-shadow ui-shadow topright" id="fullscreen" alt="Fullscreen">Fullscreen</a>
+
+
+			</div>
+
+
+
+
+			<h1 class="glow in">Moon Clicker</h1>
+			<a id="popupLogin1" data-rel="popup" class="vuto ui-btn ui-corner-all ui-shadow ui-btn-b" data-transition="pop">Please enter your name or nick</a>
+			<div id="spin">
+				<script>
+				$( document ).ready(function() {
+				  setTimeout(function(){$.mobile.loading( "show", { text: "loading...", textVisible: true,  theme: "b",  html: "" });}, 100);
+					});
+				 </script>
+			</div>
+			<h2 class="typewrite"></h2>
+
+
+		<div data-history="false" data-role="popup" id="popupLogin" data-theme="a" class="ui-corner-all" data-dismissible="false">
+		Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;<!--<form method="post" action="/" mdata-ajax="true">-->
+		Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;Â&nbsp;
+							<fieldset class="ui-grid-a">
+								<div class="ui-block-a" style="padding: 5px 10px 0px 20px;"><input type="text" name="nickname" id="un" value="" placeholder="name or nick" data-theme="a"></div>
+								<div class="ui-block-b" style="padding: 0px 20px 0px 0px;"><button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-btn-icon-left ui-icon-check" data-theme="b">PLAY</button></div>
+							</fieldset>
+		Â&nbsp;Â&nbsp;Â&nbsp;
+	<!--</form>-->
+		</div>
+
+	</div><!-- /panel -->
+
+
+
+<!--</div>-->
+
+	<!-- menu  -->
+	<div data-role="panel" id="menu" data-position="left" data-display="reveal" data-theme="a">
+	 <a href="https://gamemakery.com/" data-ajax="false" data-role="none"><img border="0" src="images/logo-small.png" alt="Game Makery .Com" style="display:inline"></a><br>
+					<a target="_blank" onclick="_gaq.push(['_trackEvent', 'PlayerShare', 'FaceBook'])" href="https://www.facebook.com/sharer/sharer.php?u=https://gamemakery.com/1/9QYofaGV"><img src="images/facebook.png" style="padding:5px 5px 5px 5px;"></a>
+					<a target="_blank" onclick="_gaq.push(['_trackEvent', 'PlayerShare', 'Twitter'])" href="https://twitter.com/home?status=https://gamemakery.com/1/9QYofaGV"><img src="images/twitter.png" style="padding:5px 5px 5px 5px;"></a>
+					<a target="_blank" onclick="_gaq.push(['_trackEvent', 'PlayerShare', 'Whatsapp'])" href="whatsapp://send?text=https://gamemakery.com/1/9QYofaGV"><img src="images/whatsapp.png" style="padding:5px 5px 5px 5px;"></a>
+					<a href="//gamemakery.com/game-creator.php" onclick="_gaq.push(['_trackEvent', 'GameCreatorButtonInGame', 'clicked'])" data-ajax="false" class="ui-btn ui-corner-all ui-shadow" target="_blank">Make Your Own Game!<br>Click Here!</a>
+
+
+<!-- /1005400/GameMakery_Com_234_60 -->
+<div id="div-gpt-ad-1445273404786-1" style="height:60px; width:234px;">
+<script type="text/javascript">
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1445273404786-1'); });
+</script>
+</div>
+
+<!--<a id="showscore" data-role="button" data-icon="refresh" data-iconpos="notext" data-theme="a" data-inline="true" class="ui-link ui-btn ui-btn-a ui-icon-refresh ui-btn-icon-notext ui-btn-inline ui-shadow ui-corner-all" role="button">Refresh</a>-->
+ <div data-role="main" class="ui-content">
+<table data-role="table" id="score-table" data-mode="columntoggle:none" class="ui-responsive table-stroke">
+      <thead>
+        <tr>
+          <th data-priority="1">#</th>
+          <th data-priority="2">Name</th>
+          <th data-priority="3">Moons /sec</th>
+        </tr>
+      </thead>
+      <tbody>
+ 
+      </tbody>
+    </table>
+
+	</div><!-- /menu -->
+	
+		
+
+<p></p>
+
+<p>
+Â© Online Ocigrup SL <a href="//gamemakery.com/privacy.php?domini=R2FtZU1ha2VyeS5Db20=" rel="nofollow" target="_blank">Privacy</a>
+</p>
+
+</div><!-- /page -->
+
+</div>
+
+<script src="js/cookies-EN.js" async=""></script>
+
+</body></html>
